@@ -1,0 +1,120 @@
+import java.util.*;
+
+public class Solution {
+   public static void main(String [] args)
+    {
+        Scanner sc =new Scanner(System.in);
+
+        int t= sc.nextInt();
+        while(t-->0)
+        {
+          int n =sc.nextInt();
+          int [] sizes =new int[n];
+          int [] direction= new int[n];
+
+        for(int i=0;i<n;i++)
+         sizes[i] = sc.nextInt();
+
+        for(int i=0;i<n;i++)
+          direction[i]  =sc.nextInt();
+
+       int [] rightEvolution = new int[n];
+          //max evolution that every fish can achive while moving to right direction ,
+          //   so we have to now from right to left
+           rightEvolution[n-1]=0;
+          for(int i=n-2;i>=0;i--)
+          {
+             int j=i+1;
+             int s=sizes[i];
+              while( j<=n-1 && s>=sizes[j] )
+                       j++;
+                if(j<=n-1)
+              rightEvolution[i] =rightEvolution[j]+1;
+                else
+                rightEvolution[i]=0;
+          }
+
+        int [] leftEvolution =new int[n];
+            leftEvolution[0] =0;
+         for(int i=1;i<n;i++)
+         {
+            int j=i-1;
+             int s=sizes[i];
+              while(j>=0 && s>=sizes[j])
+                   j--;
+              if(j>=0)
+              leftEvolution[i]=leftEvolution[j]+1;
+              else 
+               leftEvolution[i]=0;
+         }
+        //  System.out.println("Right Evolution");
+        //  for(int i=0;i<n;i++)
+        //    System.out.print(rightEvolution[i]+" ");
+          
+        //   System.out.println();
+        //    System.out.println("left evolution");
+        //   for(int i=0;i<n;i++)
+        //   System.out.print(leftEvolution[i]+" ");
+
+         //find the maximum right evolution 
+        int  maxr=0;
+        int initSizeR=0;
+         for (int i=0;i<n;i++)
+           {
+             if(direction[i]==1)
+              {
+                 if(rightEvolution[i]>maxr)
+                  {
+                    maxr=rightEvolution[i];
+                    initSizeR=sizes[i];
+                  }
+                 else if(rightEvolution[i]==maxr &&initSizeR<sizes[i])
+                  {
+                       initSizeR=sizes[i];
+                  }
+              }
+           }
+
+           //find the maximum size in left evolution
+          int maxl=0;
+          int initSizeL=0;
+           for(int i=0;i<n;i++)
+           {
+             if(direction[i]==-1)
+             {
+             if(leftEvolution[i]>maxl)
+             {
+               maxl=leftEvolution[i];
+               initSizeL=sizes[i];
+
+             }
+           else  if(leftEvolution[i]==maxl && initSizeL<sizes[i])
+              {
+                initSizeL=sizes[i];
+              }
+             }
+           }
+
+
+           // find the maximum evolution out of  maximum left and right evolution and print the result
+                if(maxr>maxl)
+                {
+                        System.out.println(initSizeR+" Right");
+                }
+                else if (maxr<maxl)
+                {
+                        System.out.println(initSizeL+" Left");
+                }
+                else if(maxr==maxl)
+                {
+                       if(initSizeL<initSizeR)
+                          System.out.println(initSizeR+" Right");
+                       else
+                           System.out.println(initSizeL+" Left");
+                }
+             
+
+
+        } 
+    }
+}
