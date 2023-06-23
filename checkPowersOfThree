@@ -1,0 +1,15 @@
+class Solution {
+    static public boolean checkPowersOfThree(int n) {
+        
+        // Write your code here
+         while (n > 0) {
+            int remainder = n % 3;
+            if (remainder == 2) {
+                return false;
+            }
+            n /= 3;
+        }
+    return true;
+        
+    }
+}
