@@ -1,0 +1,48 @@
+
+public class Solution {
+
+    public static int findWordCount(char[][] grid, String word) {
+        int count = 0;
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == word.charAt(0)) {
+                    count += searchWord(grid, word, i, j);
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public static int searchWord(char[][] grid, String word, int i, int j) {
+        int[][] directions = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+        int count = 0;
+
+        for (int[] dir : directions) {
+            int x = i + dir[0];
+            int y = j + dir[1];
+
+            if (x < 0 || y < 0 || x >= grid.length || y >= grid[x].length) {
+                continue;
+            }
+
+            if (grid[x][y] == word.charAt(1)) {
+                if (word.length() == 2) {
+                    count++;
+                } else {
+                    count += searchWord(grid, word.substring(1), x, y);
+                }
+            }
+        }
+
+        return count;
+    }
+
+
+	public static int findPath(char[][] inputMatrix, String target){
+       //Write your code here
+
+       return findWordCount(inputMatrix,target);
+    }
+}
