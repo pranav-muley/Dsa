@@ -1,0 +1,59 @@
+import java.util.Scanner;
+
+public class Solution {
+    public static boolean palindromeString(String s) {
+        int freq1[] = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            int idx = c - 'a';
+            freq1[idx]++;
+        }
+        
+        int count = 0;
+        for (int i = 0; i < 26; i++) {
+            if ( freq1[i]%2 == 1) {
+                count++;
+            }
+            //  System.out.print(freq1[i]);
+        }
+        
+        if (count > 1) {
+            return false;
+        }
+        
+        return true;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        String s = sc.nextLine();
+        int q = sc.nextInt();
+
+        // int[][] freq = new int[s.length() + 1][26];
+        // calculateFrequency(s, freq);
+
+        while (q-- > 0) {
+            int l = sc.nextInt();
+            int r = sc.nextInt();
+            String str = s.substring(l,r+1);
+            // System.out.println(str);
+            if (palindromeString(str)) {
+                System.out.println("Yes");
+            } else {
+                System.out.println("No");
+            }
+        }
+    }
+
+    // public static void calculateFrequency(String s, int[][] freq) {
+    //     for (int i = 1; i <= s.length(); i++) {
+    //         for (int j = 0; j < 26; j++) {
+    //             freq[i][j] = freq[i - 1][j];
+    //         }
+    //         freq[i][s.charAt(i - 1) - 'a']++;
+    //     }
+    // }
+
+    // public static boolean isFreqPalindrome(int l, int r, int[][] freq) {
+    
+}
