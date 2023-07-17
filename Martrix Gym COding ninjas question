@@ -1,0 +1,161 @@
+import java.util.*;
+
+
+public class Solution {
+    // private static int maxExtraCalories = 0;
+    // private short boolean isPath = false;
+    // private static boolean isValid(int row, int col, int numRows, int numCols) {
+    //     return row >= 0 && row < numRows && col >= 0 && col < numCols;
+    // }
+
+//     private static boolean dfs(int row, int col, int calories, int target, int[][] extraCalories, char[][] grid, boolean[][] visited) {
+//         int numRows = grid.length;
+//         int numCols = grid[0].length;
+
+//         if (!isValid(row, col, numRows, numCols) || grid[row][col] == '#') {
+//             return false;
+//         }
+
+//         if (row == numRows - 1 && col == numCols - 1) {
+//             int extra = calories - target;
+//             if (extra > maxExtraCalories) {
+//                 maxExtraCalories = extra;
+//             }
+            
+//             return true;
+//         }
+
+//         if (visited[row][col]) {
+//             return false;
+//         }
+
+//         visited[row][col] = true;
+// boolean movepossible = false;
+//         // Move right
+//         if (dfs(row, col + 1, calories + 5, target, extraCalories, grid, visited)) {
+//            movepossible = true;
+//             extraCalories[row][col] = Math.max(extraCalories[row][col], calories - target);
+//         }
+
+//         // Move downz
+//         if (dfs(row + 1, col, calories + 5, target, extraCalories, grid, visited)) {
+//             movepossible = true;
+//             extraCalories[row][col] = Math.max(extraCalories[row][col], calories - target);
+//         }
+       
+//         visited[row][col] = false;
+//          if(!movepossible){
+//             return false;
+//         }
+//         return false;
+//     }
+
+    // private static void findPath(int numRows, int numCols, int target, char[][] grid) {
+    //     int[][] extraCalories = new int[numRows][numCols];
+    //     boolean[][] visited = new boolean[numRows][numCols];
+
+    //     boolean isVal =  dfs(0, 0, 0, target, extraCalories, grid, visited);
+
+    //     // if (maxExtraCalories < 0 || !(grid.length<40) ) {
+    //     //     System.out.println("No");
+    //     // } else {
+    //     //     System.out.print("Yes ");
+    //     //     if(maxExtraCalories!=0){
+    //     //     System.out.println(maxExtraCalories);
+    //     //     }
+    //     // }
+    // }
+
+
+//above code is for geting a approach;;;;;
+//not work for all test case 3 reamain
+
+
+public static int cal = 0;
+ public static boolean isPath = false;
+
+public static void printAllPath(char arr[][], int i, int j, int path[][]) {
+    if (i < 0 || i >= arr.length || j < 0 || j >= arr[0].length || arr[i][j] == '#' || path[i][j] == 1) {
+        return;
+    }
+   
+    path[i][j] = 1;
+    // If you reach the end
+    if (i == arr.length - 1 && j == arr[0].length - 1) {
+        isPath = true;
+        path[i][j] = 0;
+        int maxExtraCalories = 0;
+        int cnt = 0;
+        for (int r = 0; r < path.length; r++) {
+            
+            for (int c = 0; c < path[0].length; c++) {
+                if(path[r][c] == 1){
+                    cnt++;
+                }
+                // System.out.print(path[r][c]+" ");
+            }
+            // if (cnt  > cal) {
+            //     cal = cnt;
+            // }
+            // System.out.println();
+        }
+        cal = cnt;
+        // System.out.println("Max Extra Calories: " + maxExtraCalories);
+        return;
+    }
+    // Right
+    printAllPath(arr, i, j + 1, path);
+    // Down
+    printAllPath(arr, i + 1, j, path);
+    // path[i][j] = 0;
+    return;
+}
+
+    // public static void main(String[] args) {
+    //     Scanner sc = new Scanner(System.in);
+    //     int numRows = sc.nextInt();
+    //     int numCols = sc.nextInt();
+
+    //     char[][] grid = new char[numRows][numCols];
+    //     for (int i = 0; i < numRows; i++) {
+    //         String row = sc.next();
+    //         grid[i] = row.toCharArray();
+    //     }
+
+    //     int[][] path = new int[numRows][numCols];
+    //     printAllPath(grid, 0, 0, path);
+
+    //     int target = sc.nextInt();
+    //     int ans = Math.abs(maxExtraCalories * 5 - target);
+
+    //     System.out.print(ans);
+    // }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int numRows = sc.nextInt();
+        // sc.nextLine();
+
+        char[][] grid = new char[numRows][];
+        for (int i = 0; i < numRows; i++) {
+            String row = sc.next();
+            grid[i] = row.toCharArray();
+        }
+// sc.nextLine();
+        int target = sc.nextInt();
+        int path[][] = new int[numRows][grid[0].length];
+        printAllPath(grid,0,0,path);
+        int ansMax = (cal)*5;
+        int ans = Math.abs(ansMax - target);
+       if(isPath){
+           if(ans == 0){
+               System.out.print("Yes");
+           }
+           else{
+               System.out.print("Yes "+ans );
+           }
+       }else{
+           System.out.print("No");
+       }
+        
+    }
+}
