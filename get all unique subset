@@ -1,0 +1,34 @@
+import java.util.*;
+public class Solution {
+
+
+    public static void printSubsets(int input[]) {
+        //changes done
+        Arrays.sort(input); // Sort the input array to handle duplicates
+        printSubsetsHelper(input, 0, new ArrayList<>());
+    }
+
+    private static void printSubsetsHelper(int[] input, int startIndex, List<Integer> output) {
+        
+        if (startIndex == input.length) {
+            for (int i = 0; i < output.size(); i++) {
+                System.out.print(output.get(i) + " ");
+            }
+            System.out.println();
+            return;
+        }
+        //added
+        // Case one, output contains the element of the input array at startIndex
+        List<Integer> newOutput = new ArrayList<>(output);
+        newOutput.add(input[startIndex]);
+        printSubsetsHelper(input, startIndex + 1, newOutput);
+
+        // Case 2, output does not contain the element of the input array at startIndex
+        // Skip duplicates
+        while (startIndex < input.length - 1 && input[startIndex] == input[startIndex + 1]) {
+            startIndex++;
+        }
+
+        printSubsetsHelper(input, startIndex + 1, output);
+    }
+}
