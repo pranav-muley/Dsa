@@ -1,0 +1,41 @@
+import java.util.*;
+public class Solution {
+	static void printSubsets(int[] arr) {
+		int n = arr.length;
+        // HashSet to store unique subsets
+        HashSet<ArrayList<Integer>> set = new HashSet<>();
+
+        // Iterating over 1 to 2^N-1
+        for (int num = 1; num <= Math.pow(2, n) - 1; num++) {
+
+            ArrayList<Integer> temp = new ArrayList<>();
+
+            // Checking ith bit value of num
+            for (int i = 0; i <= n - 1; i++) {
+
+                // If ith bit is ON, adding arr[i] to temporary subset
+                if ((num & (1 << i)) == (1 << i)) {
+                    temp.add(arr[i]);
+                }
+
+            }
+
+            // Adding the temporary subset to HashSet
+            set.add(new ArrayList<>(temp));
+
+        }
+
+        // Converting HashSet to ArrayList for sorting
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>(set);
+
+        // Printing the final answer
+        for (int i = 0; i < ans.size(); i++) {
+            // Sorting and printing each subset
+            Collections.sort(ans.get(i));
+            for (int j = 0; j < ans.get(i).size(); j++) {
+                System.out.print(ans.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
+	}
+}
